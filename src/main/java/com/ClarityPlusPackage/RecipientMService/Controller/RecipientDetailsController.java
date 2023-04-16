@@ -5,10 +5,7 @@ import com.ClarityPlusPackage.RecipientMService.Entity.RecipientDetails;
 import com.ClarityPlusPackage.RecipientMService.Service.RecipientDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,4 +22,6 @@ public class RecipientDetailsController {
         return ResponseEntity.ok(this.recipientDetailsService.searchByInstituteId(instituteID));
 
     }
+    //Implemented by double A
+    //@PostMapping("")
 }
