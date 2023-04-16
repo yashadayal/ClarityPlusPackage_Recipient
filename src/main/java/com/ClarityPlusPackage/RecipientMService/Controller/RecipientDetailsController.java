@@ -16,10 +16,10 @@ public class RecipientDetailsController {
     @Autowired
     private RecipientDetailsService recipientDetailsService;
 
-    @GetMapping("/search/{instituteID}")
-    public ResponseEntity<List<RecipientDetails>> searchByInstituteId(@PathVariable("instituteID") String instituteID){
-
-        return ResponseEntity.ok(this.recipientDetailsService.searchByInstituteId(instituteID));
+    @GetMapping("/search/{instituteID}/")
+    public ResponseEntity<List<RecipientDetails>> searchByInstituteID(@PathVariable("instituteID") String instituteID){
+        System.out.println("Inside Recipient Controller");
+        return ResponseEntity.ok(this.recipientDetailsService.searchByInstituteID(instituteID));
 
     }
     //Implemented by double A

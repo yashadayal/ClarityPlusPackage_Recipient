@@ -15,8 +15,10 @@ public class RecipientDetailsImpl implements RecipientDetailsService {
     RecipientDetailsRepo recipientDetailsRepo;
 
     @Override
-    public List<RecipientDetails> searchByInstituteId(String InstituteId) {
-        List<RecipientDetails> recipientDetailsList = this.recipientDetailsRepo.findRecipientDetailsByInstituteId(InstituteId);
+    public List<RecipientDetails> searchByInstituteID(String instituteID) {
+        System.out.println("Inside Impl");
+        List<RecipientDetails> recipientDetailsList = this.recipientDetailsRepo.findRecipientDetailsByInstituteId(instituteID);
+        System.out.println("Outside Impl");
         return recipientDetailsList;
     }
 
