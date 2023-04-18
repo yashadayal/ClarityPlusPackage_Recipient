@@ -17,11 +17,11 @@ public class RecipientDetailsController {
     private RecipientDetailsService recipientDetailsService;
 
     @GetMapping("/search/{instituteID}/")
-    public ResponseEntity<List<RecipientDetails>> searchByInstituteID(@PathVariable("instituteID") String instituteID){
+    public ResponseEntity<List<String>> searchByInstituteID(@PathVariable("instituteID") String instituteID){
         System.out.println("Inside Recipient Controller");
         return ResponseEntity.ok(this.recipientDetailsService.searchByInstituteID(instituteID));
 
     }
-    //Implemented by double A
+    //Will be implemented by double A
     //@PostMapping("")
 }

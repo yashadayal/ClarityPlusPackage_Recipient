@@ -5,5 +5,5 @@ import com.ClarityPlusPackage.RecipientMService.Entity.RecipientDetails;
 import java.util.List;
 
 public interface RecipientDetailsService {
-    List<RecipientDetails> searchByInstituteID(String InstituteId);
+    List<String> searchByInstituteID(String InstituteId);
 }

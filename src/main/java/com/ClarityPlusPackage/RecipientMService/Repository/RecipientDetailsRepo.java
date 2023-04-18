@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public interface RecipientDetailsRepo extends JpaRepository<RecipientDetails, String > {
 
-    @Query("FROM RecipientDetails p WHERE p.InstituteID = :instituteId")
-    List<RecipientDetails> findRecipientDetailsByInstituteId(@Param("instituteId") String instituteId);
+    @Query("SELECT p.OrderID FROM RecipientDetails p WHERE p.InstituteID = :instituteId AND p.Received = false")
+    List<String> findRecipientDetailsByInstituteId(@Param("instituteId") String instituteId);
 
 }

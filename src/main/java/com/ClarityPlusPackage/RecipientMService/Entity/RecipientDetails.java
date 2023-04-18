@@ -34,4 +34,7 @@ public class RecipientDetails {
 
     @Column(nullable=false,name="Retailer")
     String Retailer;
+
+    @Column(nullable=false,name="Received")
+    Boolean Received;
 }
