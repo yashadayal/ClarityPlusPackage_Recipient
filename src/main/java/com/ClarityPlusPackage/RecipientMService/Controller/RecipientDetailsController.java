@@ -22,6 +22,12 @@ public class RecipientDetailsController {
         return ResponseEntity.ok(this.recipientDetailsService.searchByInstituteID(instituteID));
 
     }
+
+    @GetMapping("/search/logs/{instituteID}/")
+    public ResponseEntity<List<String>> searchLogsByInstituteID(@PathVariable("instituteID") String instituteID){
+        System.out.println("Inside Recipient Controller");
+        return ResponseEntity.ok(this.recipientDetailsService.searchLogsByInstituteID(instituteID));
+    }
     //Will be implemented by double A
     //@PostMapping("")
 }

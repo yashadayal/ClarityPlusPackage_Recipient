@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface RecipientDetailsService {
     List<String> searchByInstituteID(String InstituteId);
+
+    List<String> searchLogsByInstituteID(String instituteID);
 }
