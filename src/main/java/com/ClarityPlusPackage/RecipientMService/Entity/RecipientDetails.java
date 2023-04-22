@@ -27,7 +27,7 @@ public class RecipientDetails {
     String RecipientFirstName;
 
     @Column(nullable=false,name="RecipientLastName")
-    String  RecipientLastName;
+    String RecipientLastName;
 
     @Column(nullable=false,name="RecipientPhoneNumber")
     String RecipientPhoneNumber;

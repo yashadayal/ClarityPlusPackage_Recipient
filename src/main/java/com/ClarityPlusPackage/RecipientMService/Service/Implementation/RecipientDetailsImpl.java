@@ -1,5 +1,6 @@
 package com.ClarityPlusPackage.RecipientMService.Service.Implementation;
 
+import com.ClarityPlusPackage.RecipientMService.DTO.RecipientDetailsDTO;
 import com.ClarityPlusPackage.RecipientMService.Entity.RecipientDetails;
 import com.ClarityPlusPackage.RecipientMService.Repository.RecipientDetailsRepo;
 import com.ClarityPlusPackage.RecipientMService.Service.RecipientDetailsService;
@@ -28,6 +29,27 @@ public class RecipientDetailsImpl implements RecipientDetailsService {
         List<String> recipientDetailsList = this.recipientDetailsRepo.findAllRecipientDetailsByInstituteId(instituteID);
         System.out.println("Outside Impl");
         return recipientDetailsList;
+    }
+
+    @Override
+    public String saveData(RecipientDetailsDTO recipientDetailsDTO) {
+        System.out.println("Inside savedata");
+        RecipientDetails recipientDetails = mapRecipientDetailsDTOToEntity(recipientDetailsDTO);
+        this.recipientDetailsRepo.save(recipientDetails);
+        System.out.println("Outside savedata");
+        return "Success";
+    }
+
+    private RecipientDetails mapRecipientDetailsDTOToEntity(RecipientDetailsDTO recipientDetailsDTO) {
+        RecipientDetails recipientDetails = new RecipientDetails();
+        recipientDetails.setOrderID(recipientDetailsDTO.getOrderID());
+        recipientDetails.setInstituteID(recipientDetailsDTO.getInstituteID());
+        recipientDetails.setRecipientFirstName(recipientDetailsDTO.getRecipientFirstName());
+        recipientDetails.setRecipientLastName(recipientDetailsDTO.getRecipientLastName());
+        recipientDetails.setRecipientPhoneNumber(recipientDetailsDTO.getRecipientPhoneNumber());
+        recipientDetails.setRetailer(recipientDetailsDTO.getRetailer());
+        recipientDetails.setReceived(false);
+        return recipientDetails;
     }
 
 

@@ -16,4 +16,5 @@ public interface RecipientDetailsRepo extends JpaRepository<RecipientDetails, St
 
     @Query("SELECT p.OrderID, p.RecipientFirstName,p.Retailer,p.Received FROM RecipientDetails p WHERE p.InstituteID = :instituteId")
     List<String> findAllRecipientDetailsByInstituteId(@Param("instituteId") String instituteID);
+
 }

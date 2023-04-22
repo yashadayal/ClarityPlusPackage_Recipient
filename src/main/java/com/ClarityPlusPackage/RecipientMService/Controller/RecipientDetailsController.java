@@ -1,6 +1,7 @@
 package com.ClarityPlusPackage.RecipientMService.Controller;
 
 
+import com.ClarityPlusPackage.RecipientMService.DTO.RecipientDetailsDTO;
 import com.ClarityPlusPackage.RecipientMService.Entity.RecipientDetails;
 import com.ClarityPlusPackage.RecipientMService.Service.RecipientDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,4 +31,12 @@ public class RecipientDetailsController {
     }
     //Will be implemented by double A
     //@PostMapping("")
+
+    @PostMapping("/savedata")
+    public ResponseEntity<String> saveData(@RequestBody RecipientDetailsDTO recipientDetailsDTO){
+        System.out.println("Inside Recipient Controller");
+        System.out.println(recipientDetailsDTO);
+        String success = this.recipientDetailsService.saveData(recipientDetailsDTO);
+        return ResponseEntity.ok(success);
+    }
 }
