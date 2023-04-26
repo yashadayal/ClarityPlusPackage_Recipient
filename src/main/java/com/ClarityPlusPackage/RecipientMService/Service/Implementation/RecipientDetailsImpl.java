@@ -37,7 +37,7 @@ public class RecipientDetailsImpl implements RecipientDetailsService {
         RecipientDetails recipientDetails = mapRecipientDetailsDTOToEntity(recipientDetailsDTO);
         this.recipientDetailsRepo.save(recipientDetails);
         System.out.println("Outside savedata");
-        return "Success";
+        return "Order details saved successfully!";
     }
 
     private RecipientDetails mapRecipientDetailsDTOToEntity(RecipientDetailsDTO recipientDetailsDTO) {

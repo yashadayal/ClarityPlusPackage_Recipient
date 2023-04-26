@@ -32,6 +32,9 @@ public class RecipientDetails {
     @Column(nullable=false,name="RecipientPhoneNumber")
     String RecipientPhoneNumber;
 
+    @Column(nullable=false,name="PersonalEmailID")
+    String PersonalEmailID;
+
     @Column(nullable=false,name="Retailer")
     String Retailer;
 

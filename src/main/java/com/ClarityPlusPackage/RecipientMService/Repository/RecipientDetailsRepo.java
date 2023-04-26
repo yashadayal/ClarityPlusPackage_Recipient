@@ -11,10 +11,10 @@ import java.util.List;
 @Repository
 public interface RecipientDetailsRepo extends JpaRepository<RecipientDetails, String > {
 
-    @Query("SELECT p.OrderID FROM RecipientDetails p WHERE p.InstituteID = :instituteId AND p.Received = false")
+    @Query("SELECT p.OrderID, p.Retailer FROM RecipientDetails p WHERE p.InstituteID = :instituteId AND p.Received = false")
     List<String> findRecipientDetailsByInstituteId(@Param("instituteId") String instituteId);
 
-    @Query("SELECT p.OrderID, p.RecipientFirstName,p.Retailer,p.Received FROM RecipientDetails p WHERE p.InstituteID = :instituteId")
+    @Query("SELECT p.OrderID, p.RecipientFirstName,p.RecipientLastName, p.Retailer,p.Received FROM RecipientDetails p WHERE p.InstituteID = :instituteId")
     List<String> findAllRecipientDetailsByInstituteId(@Param("instituteId") String instituteID);
 
 }

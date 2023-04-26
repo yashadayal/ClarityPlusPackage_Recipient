@@ -29,8 +29,6 @@ public class RecipientDetailsController {
         System.out.println("Inside Recipient Controller");
         return ResponseEntity.ok(this.recipientDetailsService.searchLogsByInstituteID(instituteID));
     }
-    //Will be implemented by double A
-    //@PostMapping("")
 
     @PostMapping("/savedata")
     public ResponseEntity<String> saveData(@RequestBody RecipientDetailsDTO recipientDetailsDTO){
