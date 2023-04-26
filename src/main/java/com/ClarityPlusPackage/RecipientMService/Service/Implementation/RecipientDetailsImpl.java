@@ -1,7 +1,7 @@
 package com.ClarityPlusPackage.RecipientMService.Service.Implementation;
 
 import com.ClarityPlusPackage.RecipientMService.DTO.RecipientDetailsDTO;
-import com.ClarityPlusPackage.RecipientMService.Entity.RecipientDetails;
+import com.ClarityPlusPackage.RecipientMService.Entity.Recipient;
 import com.ClarityPlusPackage.RecipientMService.Repository.RecipientDetailsRepo;
 import com.ClarityPlusPackage.RecipientMService.Service.RecipientDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,26 +22,32 @@ public class RecipientDetailsImpl implements RecipientDetailsService {
 
     public String getEmailIDByInstituteID(String instituteID) {
         System.out.println("Inside Implementation");
-        //String emailID = idToEmailIDRepo.findEmailIDByInstituteID(instituteID);
-        String emailID = "yasha.dayal145@gmail.com";
-        sendMail(emailID);
+        String emailID = recipientDetailsRepo.findPersonalEmailIDByInstituteID(instituteID);
+        sendMail(emailID,instituteID);
         return "OTP to sent linked emailID successfully!";
     }
 
-    public void sendMail(String emailID)  {
+    public void sendMail(String emailID, String instituteID)  {
+        System.out.println("Inside sendMail");
         String subject = "OTP for Delivering package";
         Random random = new Random();
-        int otp = random.nextInt(1000);
-        String text = "Your OTP is" + otp;
+        int otp = random.nextInt(100000);
+        List<Recipient> recipientList = this.recipientDetailsRepo.findRecipientByInstituteID(instituteID);
+        for(Recipient recipient : recipientList)
+        {
+            //recipient.setOTP(otp);
+            recipientDetailsRepo.saveByInstituteID(otp,recipient.getInstituteID());
+        }
+        String text = "Your OTP is " + otp;
+        System.out.println(text);
         emailConfig.sendOTPMail(emailID,subject,text);
         System.out.println("Outside Implementation");
     }
 
-
     @Override
     public List<String> searchByInstituteID(String instituteID) {
         System.out.println("Inside Impl");
-        List<String> recipientDetailsList = this.recipientDetailsRepo.findRecipientDetailsByInstituteId(instituteID);
+        List<String> recipientDetailsList = this.recipientDetailsRepo.findRecipientDetailsDataByInstituteId(instituteID);
         System.out.println("Outside Impl");
         return recipientDetailsList;
     }
@@ -57,22 +63,31 @@ public class RecipientDetailsImpl implements RecipientDetailsService {
     @Override
     public String saveData(RecipientDetailsDTO recipientDetailsDTO) {
         System.out.println("Inside savedata");
-        RecipientDetails recipientDetails = mapRecipientDetailsDTOToEntity(recipientDetailsDTO);
-        this.recipientDetailsRepo.save(recipientDetails);
-        System.out.println("Outside savedata");
+        Recipient recipient = mapRecipientDetailsDTOToEntity(recipientDetailsDTO);
+        this.recipientDetailsRepo.save(recipient);
+        System.out.println(recipient.getReceived());
         return "Order details saved successfully!";
     }
 
-    private RecipientDetails mapRecipientDetailsDTOToEntity(RecipientDetailsDTO recipientDetailsDTO) {
-        RecipientDetails recipientDetails = new RecipientDetails();
-        recipientDetails.setOrderID(recipientDetailsDTO.getOrderID());
-        recipientDetails.setInstituteID(recipientDetailsDTO.getInstituteID());
-        recipientDetails.setRecipientFirstName(recipientDetailsDTO.getRecipientFirstName());
-        recipientDetails.setRecipientLastName(recipientDetailsDTO.getRecipientLastName());
-        recipientDetails.setRecipientPhoneNumber(recipientDetailsDTO.getRecipientPhoneNumber());
-        recipientDetails.setRetailer(recipientDetailsDTO.getRetailer());
-        recipientDetails.setReceived(false);
-        return recipientDetails;
+    @Override
+    public String checkOtp(int otp, String instituteID) {
+        int otpSaved = this.recipientDetailsRepo.findOtpByInstituteID(instituteID);
+        if(otpSaved == otp)
+            return "OTP Verified!";
+        return "OTP not verified!";
+    }
+
+    private Recipient mapRecipientDetailsDTOToEntity(RecipientDetailsDTO recipientDetailsDTO) {
+        Recipient recipient = new Recipient();
+        recipient.setOrderID(recipientDetailsDTO.getOrderID());
+        recipient.setInstituteID(recipientDetailsDTO.getInstituteID());
+        recipient.setRecipientFirstName(recipientDetailsDTO.getRecipientFirstName());
+        recipient.setRecipientLastName(recipientDetailsDTO.getRecipientLastName());
+        recipient.setRecipientPhoneNumber(recipientDetailsDTO.getRecipientPhoneNumber());
+        recipient.setRetailer(recipientDetailsDTO.getRetailer());
+        recipient.setPersonalEmailID(recipientDetailsDTO.getPersonalEmailID());
+        recipient.setReceived(false);
+        return recipient;
     }
 
 

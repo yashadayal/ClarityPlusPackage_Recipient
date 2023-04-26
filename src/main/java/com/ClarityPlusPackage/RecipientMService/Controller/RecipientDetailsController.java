@@ -31,7 +31,6 @@ public class RecipientDetailsController {
     @PostMapping("/savedata")
     public ResponseEntity<String> saveData(@RequestBody RecipientDetailsDTO recipientDetailsDTO){
         System.out.println("Inside Recipient Controller");
-        System.out.println(recipientDetailsDTO);
         String success = this.recipientDetailsService.saveData(recipientDetailsDTO);
         return ResponseEntity.ok(success);
     }
@@ -39,5 +38,10 @@ public class RecipientDetailsController {
     @GetMapping("/getEmailID/{InstituteID}/")
     public ResponseEntity<String> getEmailIDByInstituteID(@PathVariable("InstituteID") String InstituteID)  {
         return ResponseEntity.ok(this.recipientDetailsService.getEmailIDByInstituteID(InstituteID));
+    }
+
+    @GetMapping("/checkotp/{InstituteID}/{otp}")
+    public ResponseEntity<String> checkOtp(@PathVariable("otp") int otp, @PathVariable("InstituteID") String InstituteID){
+        return ResponseEntity.ok(this.recipientDetailsService.checkOtp(otp,InstituteID));
     }
 }

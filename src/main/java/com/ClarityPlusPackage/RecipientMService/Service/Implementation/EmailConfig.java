@@ -14,12 +14,11 @@ public class EmailConfig {
 
     public void sendOTPMail(String to, String subject, String body)  {
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom("yasha.dayal145@gmail.com");
+        message.setFrom("claritypluspackage@gmail.com");
         message.setTo(to);
         message.setSubject(subject);
         message.setText(body);
         System.out.println(message);
-        System.out.println(javaMailSender);
         javaMailSender.send(message);
         System.out.println("Mail sent!");
     }

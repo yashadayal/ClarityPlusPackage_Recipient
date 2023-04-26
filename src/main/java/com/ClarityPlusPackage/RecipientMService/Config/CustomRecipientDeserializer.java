@@ -1,7 +1,6 @@
 package com.ClarityPlusPackage.RecipientMService.Config;
 
 import com.ClarityPlusPackage.RecipientMService.DTO.RecipientDetailsDTO;
-import com.ClarityPlusPackage.RecipientMService.Entity.RecipientDetails;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationContext;
@@ -24,6 +23,7 @@ public class CustomRecipientDeserializer extends JsonDeserializer<RecipientDetai
         String recipientLastName = node.get("RecipientLastName").asText();
         String recipientPhoneNumber = node.get("RecipientPhoneNumber").asText();
         String retailer = node.get("Retailer").asText();
+        String personalEmailId=node.get("PersonalEmailID").asText();
         //boolean received = node.has("Received") ? node.get("Received").asBoolean() : false;
 
         // Create Order object with extracted values
@@ -34,6 +34,7 @@ public class CustomRecipientDeserializer extends JsonDeserializer<RecipientDetai
         order.setRecipientLastName(recipientLastName);
         order.setRecipientPhoneNumber(recipientPhoneNumber);
         order.setRetailer(retailer);
+        order.setPersonalEmailID(personalEmailId);
         //order.setReceived(received);
 
         return order;

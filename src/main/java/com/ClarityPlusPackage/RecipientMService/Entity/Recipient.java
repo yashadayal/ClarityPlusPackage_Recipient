@@ -1,10 +1,7 @@
 package com.ClarityPlusPackage.RecipientMService.Entity;
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
@@ -14,7 +11,7 @@ import lombok.*;
 @Setter
 @AllArgsConstructor
 @Builder
-public class RecipientDetails {
+public class Recipient {
 
     @Id
     @Column(name = "OrderID")
@@ -40,4 +37,15 @@ public class RecipientDetails {
 
     @Column(nullable=false,name="Received")
     Boolean Received;
+
+    @Column(nullable = true,name="OTP")
+    int OTP;
+
+    @PrePersist
+    public void setDefaultValues() {
+        if (Received == null) {
+            Received = false;
+        }
+        System.out.println("Setting default values...");
+    }
 }

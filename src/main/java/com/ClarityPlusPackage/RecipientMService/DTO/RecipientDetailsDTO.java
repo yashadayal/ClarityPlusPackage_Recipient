@@ -19,5 +19,6 @@ public class RecipientDetailsDTO {
     String RecipientFirstName;
     String RecipientLastName;
     String RecipientPhoneNumber;
+    String PersonalEmailID;
     String Retailer;
 }

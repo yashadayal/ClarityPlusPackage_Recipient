@@ -1,7 +1,6 @@
 package com.ClarityPlusPackage.RecipientMService.Service;
 
 import com.ClarityPlusPackage.RecipientMService.DTO.RecipientDetailsDTO;
-import com.ClarityPlusPackage.RecipientMService.Entity.RecipientDetails;
 
 import java.util.List;
 
@@ -14,4 +13,6 @@ public interface RecipientDetailsService {
 
 
     String getEmailIDByInstituteID(String instituteID);
+
+    String checkOtp(int otp, String instituteID);
 }

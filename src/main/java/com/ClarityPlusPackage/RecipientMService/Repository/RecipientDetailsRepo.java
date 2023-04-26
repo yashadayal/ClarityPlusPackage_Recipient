@@ -1,7 +1,9 @@
 package com.ClarityPlusPackage.RecipientMService.Repository;
 
-import com.ClarityPlusPackage.RecipientMService.Entity.RecipientDetails;
+import com.ClarityPlusPackage.RecipientMService.Entity.Recipient;
+import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -9,12 +11,25 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface RecipientDetailsRepo extends JpaRepository<RecipientDetails, String > {
+public interface RecipientDetailsRepo extends JpaRepository<Recipient, String > {
 
-    @Query("SELECT p.OrderID, p.Retailer FROM RecipientDetails p WHERE p.InstituteID = :instituteId AND p.Received = false")
-    List<String> findRecipientDetailsByInstituteId(@Param("instituteId") String instituteId);
+    @Query("SELECT p.OrderID, p.Retailer FROM Recipient p WHERE p.InstituteID = :instituteId AND p.Received = false")
+    List<String> findRecipientDetailsDataByInstituteId(@Param("instituteId") String instituteId);
 
-    @Query("SELECT p.OrderID, p.RecipientFirstName,p.RecipientLastName, p.Retailer,p.Received FROM RecipientDetails p WHERE p.InstituteID = :instituteId")
+    @Query("SELECT p.OrderID, p.RecipientFirstName,p.RecipientLastName, p.Retailer,p.Received FROM Recipient p WHERE p.InstituteID = :instituteId")
     List<String> findAllRecipientDetailsByInstituteId(@Param("instituteId") String instituteID);
 
+    @Query("SELECT distinct p.PersonalEmailID FROM Recipient p WHERE p.InstituteID = :instituteId")
+    String findPersonalEmailIDByInstituteID(@Param("instituteId")String instituteID);
+
+    @Query("SELECT p FROM Recipient p where p.InstituteID = :instituteId")
+    List<Recipient> findRecipientByInstituteID(@Param("instituteId") String InstituteID);
+
+    @Modifying(clearAutomatically = true)
+    @Query(value = "UPDATE recipientdetails SET otp = :otp WHERE instituteid = :instituteID ", nativeQuery = true)
+    @Transactional
+    void saveByInstituteID(@Param("otp") int otp, @Param("instituteID") String instituteID);
+
+    @Query("SELECT distinct p.OTP FROM Recipient p where p.InstituteID = :instituteId")
+    int findOtpByInstituteID(@Param("instituteId") String instituteID);
 }
