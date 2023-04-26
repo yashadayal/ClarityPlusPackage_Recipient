@@ -8,12 +8,35 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Random;
 
 @Service
 public class RecipientDetailsImpl implements RecipientDetailsService {
 
     @Autowired
+    EmailConfig emailConfig;
+
+    @Autowired
     RecipientDetailsRepo recipientDetailsRepo;
+
+
+    public String getEmailIDByInstituteID(String instituteID) {
+        System.out.println("Inside Implementation");
+        //String emailID = idToEmailIDRepo.findEmailIDByInstituteID(instituteID);
+        String emailID = "yasha.dayal145@gmail.com";
+        sendMail(emailID);
+        return "OTP to sent linked emailID successfully!";
+    }
+
+    public void sendMail(String emailID)  {
+        String subject = "OTP for Delivering package";
+        Random random = new Random();
+        int otp = random.nextInt(1000);
+        String text = "Your OTP is" + otp;
+        emailConfig.sendOTPMail(emailID,subject,text);
+        System.out.println("Outside Implementation");
+    }
+
 
     @Override
     public List<String> searchByInstituteID(String instituteID) {

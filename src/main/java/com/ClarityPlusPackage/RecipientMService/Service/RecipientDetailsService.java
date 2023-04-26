@@ -11,4 +11,7 @@ public interface RecipientDetailsService {
     List<String> searchLogsByInstituteID(String instituteID);
 
     String saveData(RecipientDetailsDTO recipientDetailsDTO);
+
+
+    String getEmailIDByInstituteID(String instituteID);
 }

@@ -2,7 +2,6 @@ package com.ClarityPlusPackage.RecipientMService.Controller;
 
 
 import com.ClarityPlusPackage.RecipientMService.DTO.RecipientDetailsDTO;
-import com.ClarityPlusPackage.RecipientMService.Entity.RecipientDetails;
 import com.ClarityPlusPackage.RecipientMService.Service.RecipientDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +20,6 @@ public class RecipientDetailsController {
     public ResponseEntity<List<String>> searchByInstituteID(@PathVariable("instituteID") String instituteID){
         System.out.println("Inside Recipient Controller");
         return ResponseEntity.ok(this.recipientDetailsService.searchByInstituteID(instituteID));
-
     }
 
     @GetMapping("/search/logs/{instituteID}/")
@@ -36,5 +34,10 @@ public class RecipientDetailsController {
         System.out.println(recipientDetailsDTO);
         String success = this.recipientDetailsService.saveData(recipientDetailsDTO);
         return ResponseEntity.ok(success);
+    }
+
+    @GetMapping("/getEmailID/{InstituteID}/")
+    public ResponseEntity<String> getEmailIDByInstituteID(@PathVariable("InstituteID") String InstituteID)  {
+        return ResponseEntity.ok(this.recipientDetailsService.getEmailIDByInstituteID(InstituteID));
     }
 }
