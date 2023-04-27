@@ -32,4 +32,9 @@ public interface RecipientDetailsRepo extends JpaRepository<Recipient, String > 
 
     @Query("SELECT distinct p.OTP FROM Recipient p where p.InstituteID = :instituteId")
     int findOtpByInstituteID(@Param("instituteId") String instituteID);
+
+    @Modifying(clearAutomatically = true)
+    @Query(value = "UPDATE recipientdetails SET received = true WHERE instituteid = :instituteID ", nativeQuery = true)
+    @Transactional
+    void makeAsReceived(@Param("instituteID") String instituteID);
 }

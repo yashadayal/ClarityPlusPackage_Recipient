@@ -40,7 +40,7 @@ public class RecipientDetailsController {
         return ResponseEntity.ok(this.recipientDetailsService.getEmailIDByInstituteID(InstituteID));
     }
 
-    @GetMapping("/checkotp/{InstituteID}/{otp}")
+    @PostMapping("/checkotp/{InstituteID}/{otp}")
     public ResponseEntity<String> checkOtp(@PathVariable("otp") int otp, @PathVariable("InstituteID") String InstituteID){
         return ResponseEntity.ok(this.recipientDetailsService.checkOtp(otp,InstituteID));
     }

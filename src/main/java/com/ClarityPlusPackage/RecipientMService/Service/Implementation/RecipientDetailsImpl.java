@@ -35,7 +35,6 @@ public class RecipientDetailsImpl implements RecipientDetailsService {
         List<Recipient> recipientList = this.recipientDetailsRepo.findRecipientByInstituteID(instituteID);
         for(Recipient recipient : recipientList)
         {
-            //recipient.setOTP(otp);
             recipientDetailsRepo.saveByInstituteID(otp,recipient.getInstituteID());
         }
         String text = "Your OTP is " + otp;
@@ -72,8 +71,14 @@ public class RecipientDetailsImpl implements RecipientDetailsService {
     @Override
     public String checkOtp(int otp, String instituteID) {
         int otpSaved = this.recipientDetailsRepo.findOtpByInstituteID(instituteID);
-        if(otpSaved == otp)
+        if(otpSaved == otp) {
+            List<Recipient> recipientList = this.recipientDetailsRepo.findRecipientByInstituteID(instituteID);
+            for(Recipient recipient : recipientList)
+            {
+                recipientDetailsRepo.makeAsReceived(recipient.getInstituteID());
+            }
             return "OTP Verified!";
+        }
         return "OTP not verified!";
     }
 
