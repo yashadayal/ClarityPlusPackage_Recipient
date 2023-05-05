@@ -4,6 +4,8 @@ import com.ClarityPlusPackage.RecipientMService.DTO.RecipientDetailsDTO;
 import com.ClarityPlusPackage.RecipientMService.Entity.Recipient;
 import com.ClarityPlusPackage.RecipientMService.Repository.RecipientDetailsRepo;
 import com.ClarityPlusPackage.RecipientMService.Service.RecipientDetailsService;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
