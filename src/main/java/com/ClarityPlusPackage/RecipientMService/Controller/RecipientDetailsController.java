@@ -44,4 +44,12 @@ public class RecipientDetailsController {
     public ResponseEntity<String> checkOtp(@PathVariable("otp") int otp, @PathVariable("InstituteID") String InstituteID){
         return ResponseEntity.ok(this.recipientDetailsService.checkOtp(otp,InstituteID));
     }
+
+    @PostMapping("/login/recipient/{emailID}/{password}/")
+    public ResponseEntity<String> loginRecipient(@PathVariable("emailID") String emailID, @PathVariable("password") String password) {
+        //to avoid writing custom deserialization logic
+        //sending email and password as pathvariables as @RequestBody is receiving NULL
+        String response = this.recipientDetailsService.loginRecipient(emailID,password);
+        return ResponseEntity.ok(response);
+    }
 }

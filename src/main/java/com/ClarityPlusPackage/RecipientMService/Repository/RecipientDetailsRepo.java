@@ -37,4 +37,10 @@ public interface RecipientDetailsRepo extends JpaRepository<Recipient, String > 
     @Query(value = "UPDATE recipientdetails SET received = true WHERE instituteid = :instituteID ", nativeQuery = true)
     @Transactional
     void makeAsReceived(@Param("instituteID") String instituteID);
+
+    @Query("select ld.EmailID from LoginDetails ld where ld.EmailID = :emailID")
+    String findByEmailID(@Param("emailID") String emailID);
+
+    @Query("select ld.Password from LoginDetails ld where ld.EmailID = :emailExistOrNot")
+    String findPasswordByEmailID(@Param("emailExistOrNot") String emailExistOrNot);
 }

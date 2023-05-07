@@ -84,6 +84,18 @@ public class RecipientDetailsImpl implements RecipientDetailsService {
         return "OTP not verified!";
     }
 
+    @Override
+    public String loginRecipient(String emailID, String password) {
+        String emailExistOrNot = this.recipientDetailsRepo.findByEmailID(emailID);
+        System.out.println(emailExistOrNot);
+        if(emailExistOrNot == null)
+            return "EmailID does not exist. \n Re-check the emailID or contact the admin.";
+        String passwordWithEmailID = this.recipientDetailsRepo.findPasswordByEmailID(emailExistOrNot);
+        if(!passwordWithEmailID.equals(password))
+            return "Invalid Login";
+        return "Valid Login";
+    }
+
     private Recipient mapRecipientDetailsDTOToEntity(RecipientDetailsDTO recipientDetailsDTO) {
         Recipient recipient = new Recipient();
         recipient.setOrderID(recipientDetailsDTO.getOrderID());
@@ -96,6 +108,4 @@ public class RecipientDetailsImpl implements RecipientDetailsService {
         recipient.setReceived(false);
         return recipient;
     }
-
-
 }

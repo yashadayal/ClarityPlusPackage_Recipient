@@ -15,4 +15,6 @@ public interface RecipientDetailsService {
     String getEmailIDByInstituteID(String instituteID);
 
     String checkOtp(int otp, String instituteID);
+
+    String loginRecipient(String emailID, String password);
 }
