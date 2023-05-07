@@ -1,7 +1,9 @@
 package com.ClarityPlusPackage.RecipientMService.Service.Implementation;
 
 import com.ClarityPlusPackage.RecipientMService.DTO.RecipientDetailsDTO;
+import com.ClarityPlusPackage.RecipientMService.Entity.LoginDetails;
 import com.ClarityPlusPackage.RecipientMService.Entity.Recipient;
+import com.ClarityPlusPackage.RecipientMService.Repository.LoginRepo;
 import com.ClarityPlusPackage.RecipientMService.Repository.RecipientDetailsRepo;
 import com.ClarityPlusPackage.RecipientMService.Service.RecipientDetailsService;
 import jakarta.persistence.EntityManager;
@@ -20,6 +22,9 @@ public class RecipientDetailsImpl implements RecipientDetailsService {
 
     @Autowired
     RecipientDetailsRepo recipientDetailsRepo;
+
+    @Autowired
+    LoginRepo loginRepo;
 
 
     public String getEmailIDByInstituteID(String instituteID) {
@@ -95,6 +100,16 @@ public class RecipientDetailsImpl implements RecipientDetailsService {
             return "Invalid Login";
         return "Valid Login";
     }
+
+    @Override
+    public String dataPopulate() {
+        LoginDetails details1 = new LoginDetails("yasha@gmail.com","xyz123");
+        this.loginRepo.save(details1);
+        LoginDetails details2 = new LoginDetails("aakanksha@gmail.com","abc123");
+        this.loginRepo.save(details2);
+        return "Recipient Details Registered!";
+    }
+
 
     private Recipient mapRecipientDetailsDTOToEntity(RecipientDetailsDTO recipientDetailsDTO) {
         Recipient recipient = new Recipient();

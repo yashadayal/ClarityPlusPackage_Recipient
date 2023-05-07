@@ -17,4 +17,6 @@ public interface RecipientDetailsService {
     String checkOtp(int otp, String instituteID);
 
     String loginRecipient(String emailID, String password);
+
+    String dataPopulate();
 }

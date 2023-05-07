@@ -1,5 +1,8 @@
 package com.ClarityPlusPackage.RecipientMService;
 
+import com.ClarityPlusPackage.RecipientMService.Service.RecipientDetailsService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -14,13 +17,20 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 		"com.ClarityPlusPackage.RecipientMService.Repository",
 		"com.ClarityPlusPackage.RecipientMService.Service.Implementation"
 })
-//@EnableJpaRepositories(basePackages = {"com.ClarityPlusPackage.RecipientMService.Repository"})
 @EnableWebMvc
-//@EntityScan(basePackages = {"com.ClarityPlusPackage.RecipientMService.Entity"})
-public class RecipientMServiceApplication {
+public class RecipientMServiceApplication implements CommandLineRunner {
+
+	@Autowired
+	RecipientDetailsService recipientDetailsService;
 
 	public static void main(String[] args) {
 		SpringApplication.run(RecipientMServiceApplication.class, args);
 	}
 
+	@Override
+	public void run(String... args) throws InterruptedException {
+		Thread.sleep(5000);
+		String response = this.recipientDetailsService.dataPopulate();
+		System.out.println(response);
+	}
 }
