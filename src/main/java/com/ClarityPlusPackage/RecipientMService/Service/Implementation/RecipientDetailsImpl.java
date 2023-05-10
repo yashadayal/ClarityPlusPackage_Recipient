@@ -14,8 +14,13 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Random;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 @Service
 public class RecipientDetailsImpl implements RecipientDetailsService {
+
+    private static final Logger logger = LogManager.getLogger(RecipientDetailsImpl.class);
 
     @Autowired
     EmailConfig emailConfig;
@@ -29,13 +34,14 @@ public class RecipientDetailsImpl implements RecipientDetailsService {
 
     public String getEmailIDByInstituteID(String instituteID) {
         System.out.println("Inside Implementation");
+        logger.info("Getting email id from institute id");
         String emailID = recipientDetailsRepo.findPersonalEmailIDByInstituteID(instituteID);
         sendMail(emailID,instituteID);
         return "OTP to sent linked emailID successfully!";
     }
 
     public void sendMail(String emailID, String instituteID)  {
-        System.out.println("Inside sendMail");
+        logger.info("Inside sendMail");
         String subject = "OTP for Delivering package";
         Random random = new Random();
         int otp = random.nextInt(100000);
@@ -45,16 +51,18 @@ public class RecipientDetailsImpl implements RecipientDetailsService {
             recipientDetailsRepo.saveByInstituteID(otp,recipient.getInstituteID());
         }
         String text = "Your OTP is " + otp;
+        logger.info(text);
         System.out.println(text);
         emailConfig.sendOTPMail(emailID,subject,text);
-        System.out.println("Outside Implementation");
+        logger.debug("Outside Implementation");
     }
 
     @Override
     public List<String> searchByInstituteID(String instituteID) {
-        System.out.println("Inside Impl");
+        logger.debug("Inside Impl");
+        logger.info("Search by Institute Id");
         List<String> recipientDetailsList = this.recipientDetailsRepo.findRecipientDetailsDataByInstituteId(instituteID);
-        System.out.println("Outside Impl");
+        logger.debug("Outside Impl");
         return recipientDetailsList;
     }
 
@@ -68,15 +76,17 @@ public class RecipientDetailsImpl implements RecipientDetailsService {
 
     @Override
     public String saveData(RecipientDetailsDTO recipientDetailsDTO) {
-        System.out.println("Inside savedata");
+        logger.info("Inside savedata");
         Recipient recipient = mapRecipientDetailsDTOToEntity(recipientDetailsDTO);
         this.recipientDetailsRepo.save(recipient);
         System.out.println(recipient.getReceived());
+        logger.info(recipient.getReceived());
         return "Order details saved successfully!";
     }
 
     @Override
     public String checkOtp(int otp, String instituteID) {
+        logger.info("'Inside checkotp");
         int otpSaved = this.recipientDetailsRepo.findOtpByInstituteID(instituteID);
         if(otpSaved == otp) {
             List<Recipient> recipientList = this.recipientDetailsRepo.findRecipientByInstituteID(instituteID);
@@ -84,20 +94,29 @@ public class RecipientDetailsImpl implements RecipientDetailsService {
             {
                 recipientDetailsRepo.makeAsReceived(recipient.getInstituteID());
             }
+            logger.info("OTP Verified!");
             return "OTP Verified!";
         }
+        logger.info("OTP not verified!");
         return "OTP not verified!";
     }
 
     @Override
     public String loginRecipient(String emailID, String password) {
+        logger.info("Inside loginRecipient");
         String emailExistOrNot = this.recipientDetailsRepo.findByEmailID(emailID);
+        logger.info("Email Exist or Not: {}",emailExistOrNot);
         System.out.println(emailExistOrNot);
-        if(emailExistOrNot == null)
+        if(emailExistOrNot == null){
+            logger.info("EmailID does not exist. Re-check the emailID or contact the admin.");
             return "EmailID does not exist. \n Re-check the emailID or contact the admin.";
+        }
         String passwordWithEmailID = this.recipientDetailsRepo.findPasswordByEmailID(emailExistOrNot);
-        if(!passwordWithEmailID.equals(password))
+        if(!passwordWithEmailID.equals(password)) {
+            logger.info("Invalid Login");
             return "Invalid Login";
+        }
+        logger.info("Valid Login");
         return "Valid Login";
     }
 
